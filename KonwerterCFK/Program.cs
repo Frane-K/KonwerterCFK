@@ -5,68 +5,71 @@ public class Konwerter
 
     public static void Main(string[] args)
     {
-        Console.WriteLine("Na co chcesz konwertować?");
-        Console.WriteLine("1. Farenheity");
-        Console.WriteLine("2. Kelviny");
-
-
-        var odpowiedź = Console.ReadLine();
-
-        if (odpowiedź == "1")
+        while (true)
         {
-            Console.WriteLine("Podaj ile stopni celcjusza");
+            Console.WriteLine("Na co chcesz konwertować?");
+            Console.WriteLine("1. Farenheity");
+            Console.WriteLine("2. Kelviny");
+            
 
+            var odpowiedź = Console.ReadLine();
 
-
-            if (double.TryParse(Console.ReadLine(), out double celcjusz))         //D ouble   ,  out...
+            if (odpowiedź == "1")
             {
-                double farenheit = CelcjuszNaFarenheita(celcjusz);
-                Console.WriteLine($"Temperatura w stopniach farenheita wynosi :{farenheit}");
+                Convert(new FarenheitConverter(), "farenheit");
+               
+            }
+            else if (odpowiedź == "2")
+            {
+                Convert(new KelvinConverter(), "kelvin");
             }
             else
             {
-                throw new Exception("musisz wpisać liczbę");
+                throw new Exception("coś poszło nie tak");
             }
         }
-        else if (odpowiedź == "2")
+        //dopisać trzeci konwerter który będzie konwertował z celcjusza do rankine
+
+
+    }
+
+   
+
+    private static void Convert(IConverter converter, string conversionType)
+    {
+        Console.WriteLine("Podaj ile stopni celcjusza");
+
+        if (double.TryParse(Console.ReadLine(), out double celcjusz))         //D ouble   ,  out...
         {
-            Console.WriteLine("Podaj ile stopni celcjusza");
-
-
-
-            if (double.TryParse(Console.ReadLine(), out double celcjusz))
-            {
-                double kelvin = CelcjuszNaKelvina(celcjusz);
-                Console.WriteLine($"Temperatura w kelvinach wynosi :{kelvin}");
-            }
-            else
-            {
-                throw new Exception("musisz wpisać liczbę");
-            }
+            double temperatura = converter.ConvertFromCelcius(celcjusz);
+            Console.WriteLine($"Temperatura w {conversionType} wynosi :{temperatura}");
         }
         else
         {
-            throw new Exception("coś poszło nie tak");
+            throw new Exception("musisz wpisać liczbę");
         }
-
-
-
-        
-            
-
-
     }
 
-    public static double CelcjuszNaFarenheita(double celcjusz)
+  
+}
+
+public class FarenheitConverter : IConverter
+{
+    public double ConvertFromCelcius(double celcjusz)
     {
         return (celcjusz * 9 / 5) + 32;
     }
+}
 
-
-    public static double CelcjuszNaKelvina(double celcjusz)
+public class KelvinConverter : IConverter
+{
+    public double ConvertFromCelcius(double celcjusz)
     {
         return celcjusz + 273.15;
     }
-    
+}
 
+public interface IConverter
+{
+    double ConvertFromCelcius(double celcjusz);
 }
