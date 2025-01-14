@@ -11,7 +11,8 @@ public class Konwerter
             Console.WriteLine("1. Farenheity");
             Console.WriteLine("2. Kelviny");
             Console.WriteLine("3. Rankine");
-            
+            Console.WriteLine("4. Test Gita");
+
 
             var odpowiedź = Console.ReadLine();
 
@@ -27,6 +28,10 @@ public class Konwerter
             else if (odpowiedź== "3")
             {
                 Convert(new RankineConverter(), "rankine");
+            }
+            else if (odpowiedź == "4")
+            {
+                Console.WriteLine("Testujemy gita");
             }
             else
             {
