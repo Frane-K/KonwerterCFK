@@ -10,6 +10,7 @@ public class Konwerter
             Console.WriteLine("Na co chcesz konwertować?");
             Console.WriteLine("1. Farenheity");
             Console.WriteLine("2. Kelviny");
+            Console.WriteLine("3. Rankine");
             
 
             var odpowiedź = Console.ReadLine();
@@ -22,6 +23,10 @@ public class Konwerter
             else if (odpowiedź == "2")
             {
                 Convert(new KelvinConverter(), "kelvin");
+            }
+            else if (odpowiedź== "3")
+            {
+                Convert(new RankineConverter(), "rankine");
             }
             else
             {
@@ -66,6 +71,16 @@ public class KelvinConverter : IConverter
     public double ConvertFromCelcius(double celcjusz)
     {
         return celcjusz + 273.15;
+    }
+}
+
+
+public class RankineConverter : IConverter
+{
+    public double ConvertFromCelcius(double celcjusz)
+    {
+        var rankineOdp = (celcjusz + 273.15) * 9 / 5;                    //12 C = 536,67 R
+        return Math.Round(rankineOdp, 2);                                //10 C = 536,00 R
     }
 }
 
